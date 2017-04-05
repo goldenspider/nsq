@@ -302,6 +302,10 @@ func writeSyncFile(fn string, data []byte) error {
 	return err
 }
 
+//LoadMetadata载入元数据
+//元数据以json格式保存在nsqd可执行文件目录下的nsqd.%d.dat中。其中%d为代表该程序的ID，
+//通过在启动时的命令行worker-id或者配置文件中的id指定。默认ID是通过对主机名散列后获得。
+//因此保证了同一台机器每次启动的ID相同。
 func (n *NSQD) LoadMetadata() error {
 	atomic.StoreInt32(&n.isLoading, 1)
 	defer atomic.StoreInt32(&n.isLoading, 0)
